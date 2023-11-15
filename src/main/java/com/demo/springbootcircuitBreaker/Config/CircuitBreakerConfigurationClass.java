@@ -25,7 +25,7 @@ public class CircuitBreakerConfigurationClass {
     }
 
     @Bean
-    private void createCircuitBreakerInstance() {
+    public void createCircuitBreakerInstance() {
         // Create a CircuitBreakerRegistry with a custom global configuration
         CircuitBreakerRegistry circuitBreakerRegistry =
                 CircuitBreakerRegistry.of(createCircuitBreakerConfiguration());
