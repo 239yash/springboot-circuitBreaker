@@ -15,6 +15,6 @@ public class RestApiController {
     private final MainService mainService;
     @GetMapping
     public String getController() {
-        return "";
+        return mainService.testMethod();
     }
 }
