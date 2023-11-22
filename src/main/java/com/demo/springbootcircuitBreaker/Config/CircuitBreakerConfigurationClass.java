@@ -15,12 +15,13 @@ public class CircuitBreakerConfigurationClass {
 
     private CircuitBreakerConfig createCircuitBreakerConfiguration() {
         return CircuitBreakerConfig.custom()
-                .failureRateThreshold(30)
-                .automaticTransitionFromOpenToHalfOpenEnabled(true)
+                .failureRateThreshold(50)
+                .minimumNumberOfCalls(10)
+                .slidingWindowSize(100)
                 .waitDurationInOpenState(Duration.ofSeconds(10))
                 .permittedNumberOfCallsInHalfOpenState(3)
+                .automaticTransitionFromOpenToHalfOpenEnabled(true)
                 .slidingWindowType(CircuitBreakerConfig.SlidingWindowType.COUNT_BASED)
-                .slidingWindowSize(10)
                 .recordExceptions(TestException.class)
                 .build();
     }
