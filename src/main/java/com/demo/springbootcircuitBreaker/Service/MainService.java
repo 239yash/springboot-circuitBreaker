@@ -26,18 +26,18 @@ public class MainService {
             // Decorate your call to third party call method with a CircuitBreaker
             // And execute the decorated supplier and recover from any exception
             Supplier<String> decoratedSupplier = CircuitBreaker.decorateSupplier(circuitBreaker, this::thirdPartyServiceCall);
-            log.info("Counter - " + counter + ", Circuit breaker state - " + circuitBreaker.getState() +  ". Call Successful - " + decoratedSupplier.get());
+            log.info("Counter - " + counter + ", CB state - " + circuitBreaker.getState() +  ". Call Successful - " + decoratedSupplier.get());
         } catch (TestException e) {
             // Handle our custom test exception
-            log.error("Counter - " + counter + ", Circuit breaker state - " + circuitBreaker.getState() +  ". TestException - " + e.getMessage());
+            log.error("Counter - " + counter + ", CB state - " + circuitBreaker.getState() +  ". TestException - " + e.getMessage());
         } catch (CallNotPermittedException ex) {
             // Handle call not permitted exception which is provided by resilience4j-circuitBreaker
-            log.error("Counter - " + counter + ", Circuit breaker state - " + circuitBreaker.getState() +  ". CallNotPermittedException - " + ex.getMessage());
+            log.error("Counter - " + counter + ", CB state - " + circuitBreaker.getState() +  ". CallNotPermittedException - Calls Not Allowed!");
         }
     }
 
     private String thirdPartyServiceCall() {
         // Throwing our custom test exception everytime this method is called!
-        throw new TestException("Remote service failed!");
+        throw new TestException("FAIL!");
     }
 }
