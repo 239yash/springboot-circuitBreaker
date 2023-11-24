@@ -21,19 +21,18 @@ public class MainService {
         counter++;
         // Fetching our circuit breaker instance which was created initially in a bean
         CircuitBreaker circuitBreaker = circuitBreakerConfigurationClass.getCircuitBreakerInstance();
-        log.info("Api call counter - " + counter + " and circuit breaker state - " + circuitBreaker.getState());
 
         try {
             // Decorate your call to third party call method with a CircuitBreaker
             // And execute the decorated supplier and recover from any exception
             Supplier<String> decoratedSupplier = CircuitBreaker.decorateSupplier(circuitBreaker, this::thirdPartyServiceCall);
-            log.info("Call Successful - " + decoratedSupplier.get());
+            log.info("Counter - " + counter + ", Circuit breaker state - " + circuitBreaker.getState() +  ". Call Successful - " + decoratedSupplier.get());
         } catch (TestException e) {
             // Handle our custom test exception
-            log.error("TestException - " + e.getMessage());
+            log.error("Counter - " + counter + ", Circuit breaker state - " + circuitBreaker.getState() +  ". TestException - " + e.getMessage());
         } catch (CallNotPermittedException ex) {
             // Handle call not permitted exception which is provided by resilience4j-circuitBreaker
-            log.error("CallNotPermittedException - " + ex.getMessage());
+            log.error("Counter - " + counter + ", Circuit breaker state - " + circuitBreaker.getState() +  ". CallNotPermittedException - " + ex.getMessage());
         }
     }
 
